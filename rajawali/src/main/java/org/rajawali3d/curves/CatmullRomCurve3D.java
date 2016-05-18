@@ -128,18 +128,20 @@ public class CatmullRomCurve3D implements ICurve3D {
 		{
 			// Limit the bounds for AccelerateDecelerateInterpolator
 			currentIndex = Math.max(currentIndex, 2);
-			currentIndex = Math.min(currentIndex, mPoints.size() - 2);
+			currentIndex = Math.min(currentIndex, mPoints.size() - 1);
 		}
 		
 		for (int j = -2; j <= 1; j++) {
 			double b = b(j, tdivnum);
 			int index = mIsClosed ? (currentIndex + j + 1) % (mNumPoints) : currentIndex + j;
 			if (index < 0) index = mNumPoints - index - 2;
-			Vector3 p = mPoints.get(index);
+			if(index < mPoints.size()){
+				Vector3 p = mPoints.get(index);
 
-			mCurrentPoint.x += b * p.x;
-			mCurrentPoint.y += b * p.y;
-			mCurrentPoint.z += b * p.z;
+				mCurrentPoint.x += b * p.x;
+				mCurrentPoint.y += b * p.y;
+				mCurrentPoint.z += b * p.z;
+			}
 		}
 		result.setAll(mCurrentPoint);
 	}

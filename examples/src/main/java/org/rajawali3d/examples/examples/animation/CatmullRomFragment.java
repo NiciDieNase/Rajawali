@@ -42,7 +42,7 @@ public class CatmullRomFragment extends AExampleFragment {
 
 			getCurrentCamera().setPosition(0, 0, 10);
 			getCurrentCamera().setLookAt(0, 0, 0);
-            getCurrentCamera().enableLookAt();
+			getCurrentCamera().enableLookAt();
 
 			Material material = new Material();
 
@@ -51,27 +51,35 @@ public class CatmullRomFragment extends AExampleFragment {
 			float r = 12;
 			float rh = r * .5f;
 
-			for (int i = 0; i < 16; i++) {
-				path.addPoint(new Vector3(-rh + (Math.random() * r), -rh
-						+ (Math.random() * r), -rh + (Math.random() * r)));
-			}
-
+//			for (int i = 0; i < 12; i++) {
+//				path.addPoint(new Vector3(-rh + (Math.random() * r), -rh
+//						+ (Math.random() * r), -rh + (Math.random() * r)));
+//			}
+			path.addPoint(new Vector3(-20.0, -5.0,  0.0));
+			path.addPoint(new Vector3(-5.0, -5.0,  0.0));
+			path.addPoint(new Vector3( 5.0, 0,  0.0));
+			path.addPoint(new Vector3(-5.0,  5.0,  0.0));
+			path.addPoint(new Vector3(-20.0, 5.0,  0.0));
+//			path.addPoint(new Vector3(-5.0, -5.0,  0.0));
+//			path.addPoint(new Vector3(-5.0, -10.0, 0.0));
+//			path.isClosedCurve(true);
 			try {
 				LoaderOBJ parser = new LoaderOBJ(mContext.getResources(),
-												 mTextureManager, R.raw.arrow);
+						mTextureManager, R.raw.teapot_obj);
 				parser.parse();
-				Object3D arrow = parser.getParsedObject();
-				arrow.setMaterial(material);
-				arrow.setScale(.2f);
-				arrow.setColor(0xffffff00);
-				getCurrentScene().addChild(arrow);
+				Object3D object = parser.getParsedObject();
+				object.setMaterial(material);
+				object.setScale(2.0f);
+				object.setColor(0xffffff00);
+				getCurrentScene().addChild(object);
 
 				final SplineTranslateAnimation3D anim = new SplineTranslateAnimation3D(path);
-				anim.setDurationMilliseconds(12000);
-				anim.setRepeatMode(Animation.RepeatMode.REVERSE_INFINITE);
+				anim.setDurationMilliseconds(10000);
+				anim.setRepeatMode(Animation.RepeatMode.NONE);
+//				anim.setRepeatCount(3);
 				// -- orient to path
 				anim.setOrientToPath(true);
-				anim.setTransformable3D(arrow);
+				anim.setTransformable3D(object);
 				getCurrentScene().registerAnimation(anim);
 				anim.play();
 			} catch (ParsingException e) {
@@ -107,7 +115,7 @@ public class CatmullRomFragment extends AExampleFragment {
 			getCurrentScene().addChild(line);
 
 			EllipticalOrbitAnimation3D camAnim = new EllipticalOrbitAnimation3D(
-					new Vector3(), new Vector3(26, 0, 0), 0, 360,
+					new Vector3(), new Vector3(35, 0, 0), 0, 360,
 					EllipticalOrbitAnimation3D.OrbitDirection.CLOCKWISE);
 			camAnim.setDurationMilliseconds(10000);
 			camAnim.setRepeatMode(Animation.RepeatMode.INFINITE);
